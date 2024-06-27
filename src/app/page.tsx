@@ -82,7 +82,7 @@ export default function Home() {
     <>
     <MaxWidthWrapper>
       <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">All in One Marketplace for your{' '}
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">All in One Marketplace for your{' '}
           <span className="text-red-500"> Digital Assets.</span>
           
         </h1>
@@ -119,7 +119,7 @@ export default function Home() {
 
     </section>
 
-    <section className="border-t border-gray-200 bg-gray-50">
+    <section className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-zinc-900">
       <MaxWidthWrapper className="py-20">
         <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 ">
             {perks.map((perk)=>(
@@ -130,7 +130,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">  
-                  <h3 className="text-base font-medium text-gray-900">{perk.name}</h3>
+                  <h3 className="text-base font-medium dark:text-white text-gray-900">{perk.name}</h3>
                   <p className="mt-3 text-sm text-muted-foreground">
                     {perk.descrription}
                   </p>
