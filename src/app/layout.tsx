@@ -4,7 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
-
+import { Providers } from "@/components/Providers";
+import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,12 +28,16 @@ export default function RootLayout({
         disableTransitionOnChange
         >
         <main className="relative flex flex-col min-h-screen">
+          <Providers>
+
           <Navbar/>
           <div className="flex-grow flex-1 dark:bg-black">
               {children}
 
           </div>
+          </Providers>
         </main>
+        <Toaster position="top-center" richColors  theme="system"/>
         </ThemeProvider>
         </body>
     </html>

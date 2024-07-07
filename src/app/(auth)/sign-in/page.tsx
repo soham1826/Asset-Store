@@ -15,47 +15,59 @@ import { trpc } from '@/trpc/client'
 import { error } from 'console'
 import {toast} from 'sonner'
 import { ZodError } from 'zod'
-import {useRouter} from 'next/navigation'
+import {useRouter, useSearchParams} from 'next/navigation'
 
 
 const Page = () => {
 
+const searchParams = useSearchParams()
+
 const router = useRouter();
+const isSeller = searchParams.get('as') === "seller"
+const origin = searchParams.get('origin')
+
+const continueAsSeller = () =>{
+    router.push('?as=seller')
+}
+
+const continueAsBuyer = () =>{
+    router.replace('sign-in',undefined)
+}
 
 const{register, handleSubmit, formState:{errors}} = useForm<TAuthCredentialsValidator>({
     resolver:zodResolver(AuthCredentialsValidator)
 })
 
- const {mutate,isLoading} = trpc.auth.createPayloadUser.useMutation({
-    onError:(err)=>{if(err.data?.code === "CONFLICT"){
-        toast.error('This email is already in use . Sign in instead?')
+ const {mutate:signIn,isPending} = trpc.auth.signIn.useMutation({
+    onSuccess:()=>{
+        toast.success("Signed in successfully")
+        
 
-        return
-    }
+        if(origin){
+            router.push(`/${origin}`)
+            return
+        }
 
-    if(err instanceof ZodError){
-        toast.error(err.issues[0].message)
+        if(isSeller){
+            router.push('/sell')
+            return
+        }
 
-        return
-    }
-
-    toast.error("Something went wrong. Please try again.")
+        router.push('/')
+        router.refresh()
     },
-    onSuccess:({sentToEmail}) =>{
-        toast.success(`Verification email sent to ${sentToEmail}.`)
-        router.push('/verify-email?to='+sentToEmail)
+
+    onError:(error)=>{
+        if(error.data?.code === "UNAUTHORIZED"){
+            toast.error('Invalid email or password')
+        }
     }
-
-
-   
-
-    
  })
 // console.log(data)
 
 const onSubmit = ({email,password}:TAuthCredentialsValidator)=>{
     //send data to server
-    mutate({email,password})
+    signIn({email,password})
 }
   return (
     <div className=' container-relative flex pt-20 flex-col items-center justify-center px-0'>
@@ -64,13 +76,13 @@ const onSubmit = ({email,password}:TAuthCredentialsValidator)=>{
                 <Image src={'/logo2.png'} className='w-20 h-20' alt='logo' width={200} height={200} />
 
                 <h1 className='text-2xl font-bold'>
-                    Create an account
+                    Sign in to your{isSeller ? ' seller account':' account'}
                 </h1>
                 <Link className={buttonVariants({
                     variant:'link',
                     className:'gap-1 text-gray-500'
-                })} href='/sign-in'>
-                    Already have an account? Sign-in
+                })} href='/sign-up'>
+                    Don&apos;t have an account? Sign-up
                     <ArrowRight className='h-4 w-4'/>
                 </Link>
             </div>
@@ -113,9 +125,35 @@ const onSubmit = ({email,password}:TAuthCredentialsValidator)=>{
 
                         </div>
 
-                        <Button>Sign up</Button>
+                        <Button>Sign in</Button>
                     </div>
                 </form>
+                <div className='relative'>
+                    <div aria-hidden="true" className='absolute inset-0 flex items-center'>
+                        <span className='w-full border-t'/>
+                    </div>
+                    <div className='relative flex justify-center text-sx uppercase'>
+                        <span className='bg-background px-2 text-muted-foreground'>
+                            or
+                        </span>
+
+                    </div>
+                </div>
+                {isSeller ? (
+                    <Button onClick={continueAsBuyer}
+                    variant='secondary'
+                    disabled={isPending}
+                    >
+                        Continue as customer
+                    </Button>
+                ):(
+                    <Button onClick={continueAsSeller}
+                    variant="secondary"
+                    disabled={isPending}
+                    >
+                        Continue as seller
+                    </Button>
+                )}
             </div>
 
         </div>

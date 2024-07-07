@@ -65,7 +65,7 @@ const Cart = () => {
                 </div>
             
             </>): (<div className='flex h-full flex-col items-center justify-center space-y-1'>
-                <div className='relative mb-4 w-80 h-60 ml-5 text-muted-foreground'>
+                <div className='relative mb-4 w-80 h-60  text-muted-foreground'>
                     <Image alt='Empty cart image' src='/empty-cart.png' fill/>
                 </div>
                 <div className='text-xl font-semibold mr-4 '>Your cart is empty !</div>

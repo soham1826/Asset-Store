@@ -15,6 +15,7 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
+import ProductReel from "@/components/ProductReel";
 
 
 const Skeleton = () => (
@@ -93,7 +94,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* {TODO : ADD products} */}
+      <ProductReel title="Brand new" href="/products" subtitle="Discover the latest products"/>
     </MaxWidthWrapper>
     <section className="mb-10">
     <MaxWidthWrapper>
@@ -116,8 +117,8 @@ export default function Home() {
       ))}
     </BentoGrid>
     </MaxWidthWrapper>
-
     </section>
+    
 
     <section className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-zinc-900">
       <MaxWidthWrapper className="py-20">
