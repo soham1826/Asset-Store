@@ -94,7 +94,7 @@ export default function Home() {
         </div>
       </div>
 
-      <ProductReel title="Brand new" href="/products" subtitle="Discover the latest products"/>
+      
     </MaxWidthWrapper>
     <section className="mb-10">
     <MaxWidthWrapper>
@@ -116,6 +116,8 @@ export default function Home() {
         />
       ))}
     </BentoGrid>
+    <ProductReel query={{sort:'desc',limit:4}} title="Brand new" href="/products" subtitle="Discover the latest products"/>
+    
     </MaxWidthWrapper>
     </section>
     
