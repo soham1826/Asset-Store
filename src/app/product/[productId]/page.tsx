@@ -9,6 +9,7 @@ import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Product } from '@/payload-types'
+import AddtoCartButton from '@/components/AddtoCartButton'
 interface PageProps {
   params: {
     productId: string
@@ -51,8 +52,8 @@ const Page = async ({ params }: PageProps) => {
     .filter(Boolean) as string[]
 
   return (
-    <MaxWidthWrapper className='bg-white'>
-      <div className='bg-white'>
+    <MaxWidthWrapper>
+      <div>
         <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'>
           {/* Product Details */}
           <div className='lg:max-w-lg lg:self-end'>
@@ -80,14 +81,14 @@ const Page = async ({ params }: PageProps) => {
             </ol>
 
             <div className='mt-4'>
-              <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+              <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-200'>
                 {product.name}
               </h1>
             </div>
 
             <section className='mt-4'>
               <div className='flex items-center'>
-                <p className='font-medium text-gray-900'>
+                <p className='font-medium text-gray-900  dark:text-gray-300'>
                   {formatPrice(product.price)}
                 </p>
 
@@ -125,7 +126,7 @@ const Page = async ({ params }: PageProps) => {
           <div className='mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start'>
             <div>
               <div className='mt-10'>
-                Add to cart
+                <AddtoCartButton product={product}/>
                 {/* <AddToCartButton product={product} /> */}
               </div>
               <div className='mt-6 text-center'>
